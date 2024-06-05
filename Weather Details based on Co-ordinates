@@ -1,0 +1,56 @@
+// Function to create chat session
+const createChatSession = async () => {
+  const response = await fetch(
+    "https://gateway-dev.on-demand.io/chat/v1/sessions",
+    {
+      method: "POST",
+      headers: {
+        apikey: "<replace_api_key>",
+      },
+      body: JSON.stringify({
+        pluginIds: [],
+        externalUserId: "<replace_external_user_id>",
+      }),
+    }
+  );
+  const data = await response.json();
+  return data;
+};
+
+// Function to answer query using session ID
+const answerQuery = async (sessionId, query) => {
+  const response = await fetch(
+    `https://gateway-dev.on-demand.io/chat/v1/sessions/${sessionId}/query`,
+    {
+      method: "POST",
+      headers: {
+        apikey: "<replace_api_key>",
+      },
+      body: JSON.stringify({
+        endpointId: "predefined-openai-gpt4o",
+        query: query,
+        pluginIds: [
+          "plugin-1713962163",
+          "plugin-1717467138",
+          "plugin-1717443567",
+          "plugin-1717419365",
+          "plugin-1717418212",
+          "plugin-1717399977",
+          "plugin-1713965172",
+        ],
+        responseMode: "sync",
+      }),
+    }
+  );
+  const data = await response.json();
+  return data;
+};
+
+// Sample code to consume the APIs
+(async () => {
+  const chatSession = await createChatSession();
+  const sessionId = chatSession.chatSession.id;
+  const query = "Put your query here";
+  const response = await answerQuery(sessionId, query);
+  console.log(response);
+})();
