@@ -1,0 +1,45 @@
+// Function to create a chat session
+function createChatSession(apiKey, externalUserId) {
+    const url = 'https://gateway-dev.on-demand.io/chat/v1/sessions';
+    const headers = {
+        'apikey': apiKey
+    };
+    const body = {
+        "pluginIds": [],
+        "externalUserId": externalUserId
+    };
+
+    // Make POST request to create chat session
+    // Include code here to handle response, extract session ID from 'chatSession' object
+}
+
+// Function to answer query using session ID
+function answerQuery(apiKey, sessionId, query) {
+    const url = `https://gateway-dev.on-demand.io/chat/v1/sessions/${sessionId}/query`;
+    const headers = {
+        'apikey': apiKey
+    };
+    const body = {
+        "endpointId": "predefined-openai-gpt4o",
+        "query": query,
+        "pluginIds": ["plugin-1713962163", "plugin-1717421574", "plugin-1717419365", "plugin-1717418212"],
+        "responseMode": "sync"
+    };
+
+    // Make POST request to answer query using session ID
+    // Include code here to handle response
+}
+
+// Sample code to consume the APIs
+const apiKey = '<replace_api_key>';
+const externalUserId = '<replace_external_user_id>';
+
+// Create chat session
+createChatSession(apiKey, externalUserId);
+
+// Assume we have obtained the session ID from the response of createChatSession
+const sessionId = '<obtained_session_id>';
+const query = 'Put your query here';
+
+// Answer query using session ID
+answerQuery(apiKey, sessionId, query);
