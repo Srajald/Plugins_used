@@ -1,0 +1,44 @@
+// Step 1: Create Chat Session
+fetch("https://gateway-dev.on-demand.io/chat/v1/sessions", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    apikey: "<replace_api_key>",
+  },
+  body: JSON.stringify({
+    pluginIds: [],
+    externalUserId: "<replace_external_user_id>",
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    const sessionId = data.chatSession.id; // Extracting session ID from the response
+    // Step 2: Answer Query using the session ID
+    fetch(
+      `https://gateway-dev.on-demand.io/chat/v1/sessions/${sessionId}/query`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          apikey: "<replace_api_key>",
+        },
+        body: JSON.stringify({
+          endpointId: "predefined-openai-gpt4o",
+          query: "Put your query here",
+          pluginIds: [
+            "plugin-1717467138",
+            "plugin-1717419365",
+            "plugin-1717399977",
+            "plugin-1713965172",
+          ],
+          responseMode: "sync",
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data as needed
+      })
+      .catch((error) => console.error("Error:", error));
+  })
+  .catch((error) => console.error("Error:", error));
